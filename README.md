@@ -18,9 +18,9 @@ VIA（usevia.app）と Vial（vial.rocks / WebHID）からキーとノブを編�
 | ISP 再投入（`0603:1020`） | ✅ |
 | 書き込み・検証・復旧 | ✅ |
 | ノブ（回転・押し込み） | ✅ 既定は音量 Up/Down・Mute、Vial から変更可能 |
-| RGB / LED | ✅ 全LED白＋明るさ（最小構成、`Fn+Up/Down`） |
+| RGB / LED | ✅ 全キー同一色（Vial/VIA の Solid Color、`Fn+Up/Down` 明るさ。ちらつきは既知の制限） |
 | VIA（usevia.app） | ✅ |
-| Vial（vial.rocks / WebHID） | ✅ 82キー＋ノブ2方向 |
+| Vial（vial.rocks / WebHID） | ✅ 82キー＋ノブ2方向＋単一色RGB |
 
 ## ファームウェア
 
@@ -66,7 +66,7 @@ sinowisp write --platform sh68f90 --vendor_id 0x0603 --product_id 0x1020 \
 
 1. [vial.rocks](https://vial.rocks) を Chrome / Edge で開く
 2. **Start Vial** → 「SMK Keyboard」を選ぶ
-3. キーとノブ（2方向）を編集する
+3. キー・ノブ（2方向）・RGB（Solid Color）を編集する
 
 **WebHID は1タブだけで使ってください。** usevia.app や別タブを同時に開くと、
 入力レポートの取り合いで応答がずれます（VIA app の既知問題
@@ -74,8 +74,11 @@ sinowisp write --platform sh68f90 --vendor_id 0x0603 --product_id 0x1020 \
 
 - ノブ: 押し込みは通常キー、回転はエンコーダの2方向。既定は回転=音量 Up/Down、
   押し込み=Mute。
+- RGB: Vial の RGB 画面（**Solid Color**）または VIA の Lighting タブで、全キー同一色の
+  色と明るさを変更できます。`Fn+Up/Down` でも明るさを調整できます。
+  **ちらつき**は既知の制限です（キー走査との干渉）。
 - 制限: 回転に `MO()` や `KB_BRI_UP/DN` を割り当てても送信されません。
-  VialRGB（RGB メニュー）は未実装です。
+  RGB は単一色のみ（per-key・効果・VialRGB のアニメーションは非対応）。
 
 ## 復旧
 

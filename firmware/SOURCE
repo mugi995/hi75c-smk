@@ -6,7 +6,7 @@ The images in `firmware/` are built from the `smk` repository
 
 | Image | Source |
 | --- | --- |
-| `leobog-hi75c_default-vial_smk.hex` (v0.5.0) | tag `v0.5.0` (commit `1045e86`); built from the same tree as commit `fe86bee` |
+| `leobog-hi75c_default-vial_smk.hex` (v0.6.0) | tag `v0.6.0` (commit `8f33c92`) |
 | `leobog-hi75c_default-via_smk.hex` | commit `4b685eb`; built from the same tree as commit `9389c89` |
 | `leobog-hi75c_default_smk.hex` (v0.3.0) | commit `fc9fbb3` (branch `feat/leobog-hi75c`) |
 
