@@ -1,12 +1,13 @@
 License scope
 =============
 
-This repository contains files under two licenses.
+This repository is GPL-2.0 (see `LICENSE`).
 
 GPL-2.0
 -------
 
 - `firmware/*.hex`
+- `firmware/*.json`
 
   The firmware images are built from SMK (GPL-2.0) and the Hi75C port in
   https://github.com/mugi995/smk. The full license text is in
@@ -16,9 +17,11 @@ GPL-2.0
 MIT
 ---
 
-- Everything else, including `firmware/*.json` and `tools/`.
+- `tools/`
+- `docs/`
+- `README.md`
 
-  The full license text is in `LICENSE`.
+  The MIT license text is in `tools/LICENSE` and `docs/LICENSE`.
 
 The MIT license applies only to the files listed under MIT. It does not
-relicense the GPL-2.0 firmware images.
+relicense the GPL-2.0 firmware.

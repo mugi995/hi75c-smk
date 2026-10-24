@@ -32,10 +32,11 @@ VIA（usevia.app）と Vial（vial.rocks / WebHID）からキーとノブを編�
 
 - ソース: https://github.com/mugi995/smk （`master`、`src/keyboards/leobog-hi75c`）
 - ビルド: GitHub Actions（Nix + SDCC）
-- ライセンス: `firmware/*.hex` は **GPL-2.0**（SMK からビルド。全文は
-  [`firmware/LICENSE`](firmware/LICENSE)、対応ソースは
-  [`firmware/SOURCE`](firmware/SOURCE)）。それ以外は **MIT**
-  （[`LICENSE`](LICENSE)）。範囲の詳細は [`NOTICE`](NOTICE)。
+- ライセンス: リポジトリ全体は **GPL-2.0**（[`LICENSE`](LICENSE)）。`firmware/*.hex` は
+  GPL-2.0（全文は [`firmware/LICENSE`](firmware/LICENSE)、対応ソースは
+  [`firmware/SOURCE`](firmware/SOURCE)）。`tools/`・`docs/`・`README.md` は **MIT**
+  （[`tools/LICENSE`](tools/LICENSE)、[`docs/LICENSE`](docs/LICENSE)）。範囲の詳細は
+  [`NOTICE`](NOTICE)。
 
 ## 書き込み
 
