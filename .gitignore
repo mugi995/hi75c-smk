@@ -1,0 +1,13 @@
+# third-party binaries / captures
+tools/sinowisp/
+tools/*.bin
+tools/*.hex
+tools/*.pcap
+
+# OS noise
+Thumbs.db
+.DS_Store
+
+# Python cache
+__pycache__/
+*.pyc

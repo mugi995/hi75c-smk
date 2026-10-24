@@ -1,0 +1,72 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<title>Hi75C WebHID probe</title>
+<style>
+  body { font-family: system-ui, sans-serif; margin: 2rem; max-width: 60rem; }
+  button { font-size: 1.1rem; padding: .5rem 1rem; }
+  pre { background: #111; color: #eee; padding: 1rem; overflow: auto; }
+</style>
+</head>
+<body>
+<h1>Hi75C WebHID probe</h1>
+<p>Vial と同じ WebHID API（Usage Page 0xFF60 / Usage 0x61、report ID 0、32 バイト）で
+実機と直接通信します。読み取り専用コマンドのみです。</p>
+<button id="go">デバイスを選択して実行</button>
+<pre id="log"></pre>
+<script>
+const out = document.getElementById('log');
+const log = (...args) => { out.textContent += args.join(' ') + '\n'; };
+const hex = (u8) => Array.from(u8).map((b) => b.toString(16).padStart(2, '0')).join(' ');
+
+function readReport(dev, timeout = 1500) {
+  return new Promise((resolve) => {
+    const onInput = (e) => {
+      dev.removeEventListener('inputreport', onInput);
+      resolve({ reportId: e.reportId, data: new Uint8Array(e.data.buffer) });
+    };
+    dev.addEventListener('inputreport', onInput);
+    setTimeout(() => {
+      dev.removeEventListener('inputreport', onInput);
+      resolve(null);
+    }, timeout);
+  });
+}
+
+async function cmd(dev, bytes) {
+  const wait = readReport(dev);
+  const payload = new Uint8Array(32);
+  payload.set(bytes);
+  await dev.sendReport(0, payload);
+  return wait;
+}
+
+document.getElementById('go').addEventListener('click', async () => {
+  out.textContent = '';
+  try {
+    if (!('hid' in navigator)) { log('navigator.hid がありません（WebHID非対応）'); return; }
+    const devices = await navigator.hid.requestDevice({ filters: [{ usagePage: 0xFF60, usage: 0x61 }] });
+    log('選択デバイス数:', devices.length);
+    if (devices.length !== 1) { log('1台だけ選んでください'); return; }
+    const dev = devices[0];
+    log('product:', dev.productName, 'vid/pid:', dev.vendorId.toString(16), dev.productId.toString(16));
+    if (!dev.opened) await dev.open();
+
+    for (const [name, bytes] of [
+      ['VIA protocol', [0x01]],
+      ['Vial ID', [0xFE, 0x00]],
+      ['Vial size', [0xFE, 0x01]],
+      ['Vial unlock', [0xFE, 0x05]],
+    ]) {
+      const r = await cmd(dev, bytes);
+      if (!r) { log(name + ': 応答なし（timeout）'); continue; }
+      log(name + ': reportId=' + r.reportId + ' len=' + r.data.length + ' -> ' + hex(r.data.slice(0, 12)));
+    }
+  } catch (err) {
+    log('ERROR:', err && err.name, err && err.message ? err.message : String(err));
+  }
+});
+</script>
+</body>
+</html>
